@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: RoomOfRequirement
+Version: 0.0.1
+Summary: bla
+Home-page: https://github.com/thadler/roomofrequirement
+Author: Thomas Hadler
+Author-email: thomas.hadler@charite.de
+Project-URL: Bug Tracker, https://github.com/thadler/roomofrequirement/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GPL-3.0-only
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: PyQt6
+Requires-Dist: pyqtdarktheme
+Requires-Dist: shapely>=2.0
+Requires-Dist: numpy
+Requires-Dist: scikit-image
+Requires-Dist: matplotlib>=3.6
+Requires-Dist: seaborn
+Requires-Dist: pydicom
+Requires-Dist: rasterio
+Requires-Dist: pandas
+Requires-Dist: fpdf
+Requires-Dist: pymongo
+Requires-Dist: mpl_interactions
+
+# Lumos

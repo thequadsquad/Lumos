@@ -1,0 +1,13 @@
+PyQt6
+pyqtdarktheme
+shapely>=2.0
+numpy
+scikit-image
+matplotlib>=3.6
+seaborn
+pydicom
+rasterio
+pandas
+fpdf
+pymongo
+mpl_interactions
