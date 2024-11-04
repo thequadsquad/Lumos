@@ -64,6 +64,7 @@ src/RoomOfRequirement/Guis/Addable_Tabs/CC_Overview_Tab.py
 src/RoomOfRequirement/Guis/Addable_Tabs/CCs_AHA_Diff_Tab.py
 src/RoomOfRequirement/Guis/Addable_Tabs/CCs_AHA_Tab.py
 src/RoomOfRequirement/Guis/Addable_Tabs/CCs_CRs_OverviewTable_Tab.py
+src/RoomOfRequirement/Guis/Addable_Tabs/CCs_ClinicalResults_Tab.py
 src/RoomOfRequirement/Guis/Addable_Tabs/CCs_ClinicalResults_tab.py
 src/RoomOfRequirement/Guis/Addable_Tabs/CCs_Mapping_Slice_Analysis.py
 src/RoomOfRequirement/Guis/Addable_Tabs/CCs_Metrics_OverviewTable_Tab.py
