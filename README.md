@@ -5,7 +5,7 @@ Lumos enables the comparison of multiple readers and was especially developed to
 # Dependencies
 Python 3.12 or newer is required. We recommend a separate environment for using this software. Further information and dependencies/libraries can be seen in the setup.cfg.   
 
-# First Use
+# Installation and First Use
 For a detailed overview of the software and possible applications see our paper. As an examplary application and a first user experience the EMIDEC data can be used.
 1.	Install Repository
       * Clone the repository
