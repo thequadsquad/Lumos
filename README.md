@@ -10,9 +10,9 @@ For a detailed overview of the software and possible applications see our paper.
 1.	Install Repository
       * Clone the repository
       * Navigate to it
-      * Install Lumos with dependicies by using: ` pip install . `
+      * Install Lumos with dependicies by using: ` pip install -e . `
 3.	Install Mongo DB
-4.  Usa EMIDEC Data as first application case:
+4.  Use the EMIDEC Data as first application case:
       *  Download EMIDEC Data by following the guide on (link).
       *  Zipped annotations for a first application case are automatically downloaded with Lumos in /docs.
       *	 Use Notebook 'Emidec_Converter' to convert Emidec Data into dicom format
@@ -20,7 +20,7 @@ For a detailed overview of the software and possible applications see our paper.
 5.	Open Lumos’ User Interface: 
       * Open terminal
       * Activate environment
-      * Navigate to /src
+      * Navigate to Lumos/src
       * Use: `python` and `from Lumos.Guis import Multi_Reader_Comparison_Tool as _; _.main()`
 6.  Use Lumos to analyze and compare readers: 
       *	Main Tab shows reader selection and cases list
