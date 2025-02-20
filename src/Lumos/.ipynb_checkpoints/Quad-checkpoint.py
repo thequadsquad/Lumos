@@ -8,13 +8,13 @@ import pydicom
 from pathlib import Path
 import traceback
 
-from RoomOfRequirement.utils import *
+from Lumos.utils import *
 
 
 class QUAD_Manager:
     def __init__(self):
         self.client    = MongoClient()
-        self.db        = self.client['CMR_QualityAssuranceDatabase_NickPapers']
+        self.db        = self.client['Lumos_CMR_QualityAssuranceDatabase'] 
         self.dcm_coll  = self.db['dicoms']
         self.anno_coll = self.db['annotations']
         self.imgo_coll = self.db['image_organizers']
@@ -38,13 +38,14 @@ class QUAD_Manager:
         # IMAGE ORGANIZERS
         # what makes image organizers fast to access?
         self.db['image_organizers'].create_index([('studyuid', 1)])
-        self.db['image_organizers'].create_index([('studyuid', 1), ('imagetype', 1)], unique=True)
+        self.db['image_organizers'].create_index([('studyuid', 1), ('imagetype', 1)])
+        self.db['image_organizers'].create_index([('studyuid', 1), ('imagetype', 1), ('stack_nr', 1)], unique=True)
         
         # EVALUATIONS
         self.db['evaluations'].create_index([('task_id', 1)])
         self.db['evaluations'].create_index([('task_id', 1), ('studyuid', 1)])
-        self.db['evaluations'].create_index([('task_id', 1), ('imagetype', 1)])
-        self.db['evaluations'].create_index([('task_id', 1), ('studyuid', 1), ('imagetype', 1)], unique=True)
+        self.db['evaluations'].create_index([('task_id', 1), ('studyuid', 1), ('imagetype', 1)])
+        self.db['evaluations'].create_index([('task_id', 1), ('studyuid', 1), ('imagetype', 1), ('stack_nr', 1)], unique=True)
         
         # CASES
         # access via reader and studyuid (not unique - e.g. several with different postprocessing software)
@@ -104,6 +105,7 @@ class QUAD_Manager:
             eva_dict.pop('imgo')
             eva_dict.pop('depthandtime2sop')
             self.eval_coll.insert_one(eva_dict)
+            print('EVA DICT: ', eva_dict)
         except Exception as e: print(traceback.format_exc()); return; 
         
     def insert_case(self, case):

@@ -11,10 +11,10 @@ import traceback
 
 import pandas
 
-from RoomOfRequirement.loading_functions import *
-from RoomOfRequirement.Tables            import *
-from RoomOfRequirement.Figures           import *
-from RoomOfRequirement                   import Views
+from Lumos.loading_functions import *
+from Lumos.Tables            import *
+from Lumos.Figures           import *
+from Lumos                   import Views
 
 class StoreInfoWorker(QObject):
     finished = pyqtSignal()
@@ -203,32 +203,26 @@ class CCs_Multi_Overview_Tab(QWidget):
             view_name = self.view_combo.currentText()
             view_name = view_name.split(' (')[0]
 
-            #wofür brauchen wir das??? get view wo wird das genutzt?
             v = self.get_view(view_name)
             
             tuple = ()
-            #if len(self.cases) in range(1,20):
+            
             evals_dict = dict()
             for k in range(0, len(self.cases)):
                 tuple = tuple + (self.cases[k],)
                 evals_dict[k] = list()
                 
             zipper = zip(tuple[k] for k in range(0,len(self.cases)))
+            print(zipper)
             for cs in zipper:
                 tmp_view_name = view_name
                 for j in range(0,len(cs[0])):
                     if not (tmp_view_name in cs[0][j].evals.keys()): continue
+                    print(cs[0][j].evals[tmp_view_name])
                     if not (len(cs[0][j].evals[tmp_view_name])!=0): continue
                     k = list(self.taskname.values()).index(cs[0][j].evals[tmp_view_name][0].taskname)
                     evals_dict[k].append(cs[0][j].evals[tmp_view_name][0]) 
                     
-            #else:
-            ##    msg = QMessageBox()
-            #    msg.setIcon(QMessageBox.Icon.Information)
-            #    msg.setText("Please choose between 1 and 20 methods.")
-            #    msg.setInformativeText("You have to choose at least one and no more than twenty methods.")
-            #    retval = msg.exec()
-            #    return
             
             self.evals_list = [evals_dict[j] for j in evals_dict.keys()]       
             self.excluded_studyuids = set()
@@ -266,30 +260,16 @@ class CCs_Multi_Overview_Tab(QWidget):
             zipper = list(zip(tuple[k] for k in range(0,len(self.cases))))
             
             list_of_sets = [[set(cs[0][j].evals.keys() ) for j in range(0,len(tuple[0])) ] for cs in zipper ]
-            #print(list_of_sets)
+           
             inter_sets   = []
             for k in range(0, len(list_of_sets[0])):
                 inter_sets.append([list_of_sets[i][k] for i in range(0, len(list_of_sets)) ])
             j=0 # index for number of cases we walk through
             for lists in inter_sets:
                 for vname in set.intersection( *lists ):
-                    #print(vname)
-                    #print([[len(cs[0][j].evals[vname] ) for j in range(0,len(tuple[0])) ] for cs in zipper])
-                    #for j in range(0,len(tuple[0])):
-                    #print('lists:' ,lists)
-                    
-                    #print(j)
-                    #control = [len(cs[0][j].evals[vname] )   for cs in zipper]
-                    #print(control)
-                    #if 0 in [len(cs[0][j].evals[vname] ) for j in range(0,len(tuple[0]))  for cs in zipper]: continue
                     if 0 in [len(cs[0][j].evals[vname] )   for cs in zipper]: continue
-                    
-                    #print([[set(cs[0][j].evals[vname] ) for j in range(0,len(tuple[0])) ] for cs in zipper])
-                    #print([[set(cs[0][j].evals.values()) for j in range(0,len(tuple[0])) ] for cs in zipper])
-                    #print([[(cs[0][j].evals[vname] ) for j in range(0,len(tuple[0])) ] for cs in zipper])
                     vname = vname.replace('Lazy Luna: ', '')
                     nr_ccs_per_view[vname] += 1
-                    #print('nr in braces: ', nr_ccs_per_view[vname])
                 j+=1
         except Exception as e:
             print(traceback.format_exc())
@@ -484,7 +464,7 @@ class CaseTabSelectionPopup(QWidget):
         
         self.choose_case = QComboBox()
         self.choose_case.setFixedHeight(50)
-        casenames = [e.name for e in set(self.parent.evals_list[0]).union(set(self.parent.evals_list[0]))       #warum union???????
+        casenames = [e.name for e in set(self.parent.evals_list[0]).union(set(self.parent.evals_list[0]))      
                      if e.studyuid not in self.parent.excluded_studyuids]
         sorted_casenames = sorted(casenames, key=str.lower)                                         
         self.choose_case.addItems(['Choose a Case'] + sorted_casenames)             

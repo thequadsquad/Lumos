@@ -1,17 +1,15 @@
 import traceback
-import pickle
 import numpy as np
-import json
 from shapely.geometry import Polygon, MultiPolygon, Point, MultiPoint, shape
 from shapely.affinity import scale
 
-import RoomOfRequirement
-from RoomOfRequirement import utils
+import Lumos
+from Lumos import utils
 
 
 class Annotation:
     def __init__(self, db, task_id=None, sop=None):
-        assert type(db)==RoomOfRequirement.Quad.QUAD_Manager, 'quad should be of type RoomOfRequirement.Quad.QUAD_Manager'
+        assert type(db)==Lumos.Quad.QUAD_Manager, 'quad should be of type Lumos.Quad.QUAD_Manager'
         if task_id is not None and sop is not None: anno_dict = db.anno_coll.find_one({'task_id': task_id, 'sop': sop})
         if anno_dict is None:                       anno_dict = dict()
         if anno_dict != dict(): 
@@ -63,7 +61,7 @@ class Annotation:
         if not self.has_contour(cont_name): return
         utils.plot_geo_face(ax, self.get_contour(cont_name), c=c, alpha=alpha)
 
-    def plot_cont_comparison(self, ax, other_anno, cont_name, colors=['g','r','b'], alpha=0.4):
+    def plot_cont_comparison(self, ax, other_anno, cont_name, colors=['#dc267f', '#785ef0', '#ffb000'], alpha=0.4):   #[ 'green', 'red', 'blue']
         """Plots contour comparison on matplotlib axis
             
         Args:
@@ -146,6 +144,35 @@ class Annotation:
         """
         if self.has_point(point_name): return self.anno[point_name]['cont']
         else:                          return Point()
+
+
+    def has_threshold(self, thresh_name):
+        """has function
+        
+        Args:
+            thresh_name (str): thresh name
+            
+        Returns:
+            bool: True if thresh available, else False
+        """
+        if not 'lv_scar' in self.anno.keys():                                      return False
+        if not thresh_name in self.anno['lv_scar'].keys():                         return False
+        if not isinstance(self.anno['lv_scar'][thresh_name], (int, float)):        return False
+        return True
+
+    def get_threshold(self, thresh_name):
+        """getter function
+        
+        Args:
+            thresh_name (str): thresh name
+            
+        Returns:
+            float number if available, else nan
+        """
+        if self.has_threshold(thresh_name): return self.anno['lv_scar'][thresh_name]
+        else:                               return np.nan
+    
+
 
     def get_cont_as_mask(self, cont_name):
         """Transforms contour to binarized mask

@@ -3,7 +3,7 @@ from Lumos.Views import *
 from Lumos.ImageOrganizer import *
 
 import math
-
+import numpy as np
 
 ## Evaluation/Report
 class Evaluation:
@@ -13,10 +13,10 @@ class Evaluation:
     # 2) DB contains only ImgOrganizer and Annotations
     #    Cannot load the eval object... try loading the ImgO object and set the raeder name
     #    call "calculate_clinical_parameters" in order to compute the evaluation object
-    def __init__(self, db=None, task_id=None, studyuid=None, imagetype=None):
+    def __init__(self, db=None, task_id=None, studyuid=None, imagetype=None, stack_nr=0):
         assert type(db)==Lumos.Quad.QUAD_Manager, 'quad should be of type Lumos.Quad.QUAD_Manager'
-        if None not in [task_id, imagetype, studyuid]: 
-            try: self.__dict__ = db.eval_coll.find_one({'task_id':task_id, 'studyuid':studyuid, 'imagetype':imagetype})
+        if None not in [task_id, imagetype, studyuid, stack_nr]: 
+            try: self.__dict__ = db.eval_coll.find_one({'task_id':task_id, 'studyuid':studyuid, 'imagetype':imagetype, 'stack_nr':stack_nr})
             except Exception as e: pass
         self.db = db
         
@@ -24,7 +24,7 @@ class Evaluation:
         # take and and create from img_organizer?
         if None not in [imagetype, studyuid]:
             try:
-                self.imgo = ImageOrganizer(db, imagetype=imagetype, studyuid=studyuid)
+                self.imgo = ImageOrganizer(db, studyuid=studyuid, imagetype=imagetype, stack_nr=stack_nr)
             except Exception as e: pass#; print(traceback.format_exc())
             try:
                 #print('Here: ', self.imgo.__dict__.keys())
@@ -37,6 +37,7 @@ class Evaluation:
                 self.taskname = task['displayname']
                 self.studyuid  = studyuid
                 self.imagetype = imagetype
+                self.stack_nr   = stack_nr
                 self.missing_slices = self.imgo.missing_slices
                 self.spacing_between_slices = self.imgo.spacing_between_slices
                 self.slice_thickness = self.imgo.slice_thickness

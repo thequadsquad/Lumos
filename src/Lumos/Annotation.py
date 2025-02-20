@@ -61,7 +61,7 @@ class Annotation:
         if not self.has_contour(cont_name): return
         utils.plot_geo_face(ax, self.get_contour(cont_name), c=c, alpha=alpha)
 
-    def plot_cont_comparison(self, ax, other_anno, cont_name, colors=['g','r','b'], alpha=0.4):
+    def plot_cont_comparison(self, ax, other_anno, cont_name, colors=['#dc267f', '#785ef0', '#ffb000'], alpha=0.4):   #[ 'green', 'red', 'blue']
         """Plots contour comparison on matplotlib axis
             
         Args:

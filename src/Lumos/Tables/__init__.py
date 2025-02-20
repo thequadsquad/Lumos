@@ -1,7 +1,7 @@
 from Lumos.Tables.Table import *
 
 from Lumos.Tables.Metrics_Table import *
-#from Lumos.Tables.SAX_CINE_CC_Metrics_Table import *
+from Lumos.Tables.SAX_LGE_CC_Metrics_Table import *
 from Lumos.Tables.SAX_CINE_CCs_Metrics_Table import *
 from Lumos.Tables.LAX_CC_Metrics_Table import *
 from Lumos.Tables.LAX_CCs_MetricsTable import *
@@ -19,6 +19,7 @@ from Lumos.Tables.CC_AngleAvgT1ValuesTable import *
 from Lumos.Tables.CC_StatsOverviewTable import *
 from Lumos.Tables.SAX_Cine_Metrics_By_CardiacLocation_Table import *
 
-from Lumos.Tables.Cases_Characteristics import *
-from Lumos.Tables.Cases_ImageTypes import *
-from Lumos.Tables.Cases_AvailableAnnotypes import *
+from Lumos.Tables.Clinical_Results_Overview_Table import *
+from Lumos.Tables.Metrics_Overview_Table import *
+
+from Lumos.Tables.MULTI_ClinicalResultsAveragesTable import *

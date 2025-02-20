@@ -1,3 +1,4 @@
+LICENSE
 README.md
 pyproject.toml
 setup.cfg
@@ -68,7 +69,6 @@ src/Lumos/Guis/Addable_Tabs/CCs_ClinicalResults_Tab.py
 src/Lumos/Guis/Addable_Tabs/CCs_ClinicalResults_tab.py
 src/Lumos/Guis/Addable_Tabs/CCs_Mapping_Slice_Analysis.py
 src/Lumos/Guis/Addable_Tabs/CCs_Metrics_OverviewTable_Tab.py
-src/Lumos/Guis/Addable_Tabs/CCs_Overview_Tab.py
 src/Lumos/Guis/Addable_Tabs/CCs_Qualitative_Correlationplot_Tab.py
 src/Lumos/Guis/Addable_Tabs/MULTI_Annos_Figure_Tab.py
 src/Lumos/Guis/Addable_Tabs/MULTI_ClinicalResults_Tab.py

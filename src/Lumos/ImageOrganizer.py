@@ -5,11 +5,12 @@ import pydicom
 import Lumos
 
 class ImageOrganizer:
-    def __init__(self, db, studyuid=None, imagetype=None):
+    def __init__(self, db, studyuid=None, imagetype=None, stack_nr=0):
         assert type(db)==Lumos.Quad.QUAD_Manager, 'quad should be of type Lumos.Quad.QUAD_Manager'
         self.studyuid  = studyuid
         self.imagetype = imagetype
-        imgo = db.imgo_coll.find_one({'studyuid': studyuid, 'imagetype': imagetype})
+        self.stack_nr  = stack_nr
+        imgo = db.imgo_coll.find_one({'studyuid': studyuid, 'imagetype': imagetype, 'stack_nr': stack_nr})
         if imgo is not None: 
             self.__dict__ = imgo
             self.depthandtime2sop = {tuple(v):k for k,v in self.sop2depthandtime.items()}
@@ -20,9 +21,11 @@ class ImageOrganizer:
         # get the dicoms
         db = self.db
         if sops is not None:                            img_jsons = list(db.dcm_coll.find({'sop': {'$in': sops}}))
-        if None not in [self.studyuid, self.imagetype]: img_jsons = list(db.dcm_coll.find({'studyuid': self.studyuid, 'imagetype': self.imagetype}))
+        if None not in [self.studyuid, self.imagetype]: img_jsons = list(db.dcm_coll.find({'studyuid': self.studyuid, 'imagetype': self.imagetype, 'stack_nr':  self.stack_nr}))
         try:    self.imagetype = img_jsons[0]['imagetype']
         except: self.imagetype = 'Unknown'
+        try:    self.stack_nr  = img_jsons[0]['stack_nr']
+        except: self.stack_nr  = 'Unknown'
         
         dicoms = [pydicom.dcmread(j['path']) for j in img_jsons]
         dcm = dicoms[0]
@@ -47,7 +50,7 @@ class ImageOrganizer:
         try:   self.site               = dcm.InstitutionalDepartmentName
         except Exception as e: print(e); pass
         
-    # try a sort function as in dcmlabeling_1_tab
+    # core function - should be fast, precise and capture the warnings
     def get_sop2depthandtime(self, dicoms):
         # returns dict sop --> (depth, time)
         imgs = {dcm.SOPInstanceUID: dcm for dcm in dicoms}

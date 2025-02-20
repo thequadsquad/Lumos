@@ -1,6 +1,6 @@
-from RoomOfRequirement.Views import *
-from RoomOfRequirement.ImageOrganizer import *
-from RoomOfRequirement.Evaluation import *
+from Lumos.Views import *
+from Lumos.ImageOrganizer import *
+from Lumos.Evaluation import *
 
 import pydicom
 
@@ -27,7 +27,7 @@ class Case:
         return self.evals(viewname)
     
     def get_patient_info(self):
-        dcm  = pydicom.dcmread(self.db.dcm_coll.find_one({'studyuid' : self.studyuid})['path'])
+        dcm  = pydicom.dcmread(self.db.dcm_coll.find_one({'studyuid' : self.studyuid})['path'], stop_before_pixels=True)
         info = []
         try:    info.append(str(dcm.PatientName))
         except: info.append('')
@@ -66,19 +66,27 @@ class Case:
         case.task_id = task_id
         case.imgos, case.evals = dict(), dict()
         for imagetype in ['SAX CINE', 'SAX CS', 'LAX CINE 2CV', 'LAX CINE 3CV', 'LAX CINE 4CV', 'SAX T1 PRE', 'SAX T1 POST', 'SAX T2', 'SAX LGE', 'SAX ECV']:
-            #print(imagetype, self.studyuid, task_id)
-            try: imgo = ImageOrganizer(self.db, studyuid=self.studyuid, imagetype=imagetype)
-            except Exception as e: continue; print(e); continue
-            try: 
-                if hasattr(imgo, 'depthandtime2sop'): # das ist so inelegant... Vlt braucht man hier eine vernünftige Abfrage.
-                    case.imgos[imagetype] = imgo
-            except Exception as e: continue; print(e); continue
-            try: eva  = Evaluation(self.db, studyuid=self.studyuid, task_id=task_id, imagetype=imagetype)
-            except Exception as e: continue; print(traceback.format_exc()); continue
-            try: 
-                if len(eva.available_contours)>0: 
-                    case.evals[imagetype] = eva
-            except Exception as e: continue; print(traceback.format_exc()); continue
+
+            stacknrs = list(set([d['stack_nr'] for d in self.db.imgo_coll.find({'studyuid':self.studyuid, 'imagetype':imagetype},
+                                                                               {'_id':0,'stack_nr':1})]))
+            if len(stacknrs)!=0: case.imgos[imagetype]=[]
+            for stack_i in stacknrs:
+                try: imgo = ImageOrganizer(self.db, studyuid=self.studyuid, imagetype=imagetype, stack_nr=stack_i)
+                except Exception as e: continue; print(traceback.format_exc()); continue
+                try: 
+                    if hasattr(imgo, 'depthandtime2sop'): case.imgos[imagetype].append(imgo)
+                except Exception as e: continue; print(traceback.format_exc()); continue
+            
+            stacknrs = list(set([d['stack_nr'] for d in self.db.eval_coll.find({'studyuid':self.studyuid, 'imagetype':imagetype},
+                                                                               {'_id':0,'stack_nr':1})]))
+            
+            if len(stacknrs)!=0: case.evals[imagetype]=[]
+            for stack_i in stacknrs:
+                try: eva=Evaluation(self.db,studyuid=self.studyuid,task_id=task_id,imagetype=imagetype,stack_nr=stack_i)
+                except Exception as e: continue; print(traceback.format_exc()); continue
+                try: 
+                    if len(eva.available_contours)>0: case.evals[imagetype].append(eva)
+                except Exception as e: continue; print(traceback.format_exc()); continue
         return case
                 
                 
