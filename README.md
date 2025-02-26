@@ -12,11 +12,14 @@ For a detailed overview of the software and possible applications see our paper.
       * Navigate to it
       * Install Lumos with dependicies by using: ` pip install -e . `
 2.	Install Mongo DB
+      * Install [MongoDB Community](https://www.mongodb.com/docs/manual/administration/install-community/)
+      * Install [MongoDB Compass](https://www.mongodb.com/docs/compass/current/install/#std-label-download-install) as MongoDB User Interface
+      * run MongoDB-community and connect to local server (localhost:27017)
 3.  Use the EMIDEC Data as first application case:
       *  Download EMIDEC Data by following the guide on ([EMIDEC website](https://emidec.com/dataset)).
-      *  Zipped annotations for a first application case are automatically downloaded with Lumos in /docs.
-      *	 Use Notebook 'Emidec_Converter' to convert Emidec Data into dicom format
-      *	 Use Notebook 'MongoDB_Manager' to import dicoms and annotations into MongoDB and create necessary class structure
+      *  Zipped additional annotations for a first application case on the EMIDEC images are automatically downloaded with Lumos in /docs.
+      *	 Use Notebook 'Emidec_Converter' in Lumos/Notebooks to convert Emidec Data (Images) into dicom format
+      *	 Use Notebook 'MongoDB_Manager' in Lumos/Notebooks to import dicoms and annotations into MongoDB and create necessary class structure. You need to adjust the paths in the notebook to where you stored images and annotations as explained in the Notebook. Lumos will then be able to utilize this MongoDB Database. You can see the database in the MongoDB Compass on the lefthandside below databases as 'Lumos_CMR_QualityAssuranceDatabase'.
 4.	Open Lumos’ User Interface: 
       * Open terminal
       * Activate environment
