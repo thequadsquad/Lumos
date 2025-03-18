@@ -38,5 +38,5 @@ For a detailed overview of the software and possible applications see our paper.
 Lumos is not a licensed medical product, but intended as a research tool to aid in the quality assurance of CMR postprocessing.
 
 # Licence
-If the code was helpful to you, please cite our paper.  link
+If the code was helpful to you, please cite [our paper](https://link.springer.com/article/10.1007/s10278-025-01437-2).
 
