@@ -10,8 +10,6 @@ import numpy as np
 from Lumos.Annotation import *
 from Lumos.ImageOrganizer import *
 
-#from LazyLuna.loading_functions import add_LL_tag
-
 
 def get_values_from_nested_dict(d):
     for v in d.values():
