@@ -1,4 +1,4 @@
-Metadata-Version: 2.2
+Metadata-Version: 2.4
 Name: Lumos
 Version: 0.0.1
 Summary: see readme
@@ -13,6 +13,8 @@ Requires-Python: >=3.12
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: PyQt6==6.6.1
+Requires-Dist: PyQt6-Qt6==6.6.1
+Requires-Dist: pyqtdarktheme==0.1.7
 Requires-Dist: shapely==2.0.2
 Requires-Dist: numpy==1.26.3
 Requires-Dist: scikit-image==0.22.0
@@ -24,6 +26,7 @@ Requires-Dist: pandas==2.2.0
 Requires-Dist: fpdf==1.7.2
 Requires-Dist: pymongo==4.6.1
 Requires-Dist: mpl_interactions==0.24.1
+Dynamic: license-file
 
 # Lumos
 Lumos is a tool for analysis of postprocessing data of cardiovascular magnetic resonance imaging (CMR). A user interface is available for improved usability, the code of the backend is provided for coders.
@@ -33,17 +36,20 @@ Lumos enables the comparison of multiple readers and was especially developed to
 Python 3.12 or newer is required. We recommend a separate environment for using this software. Further information and dependencies/libraries can be seen in the setup.cfg.   
 
 # Installation and First Use
-For a detailed overview of the software and possible applications see our paper. As an examplary application and a first user experience the EMIDEC data can be used.
+For a detailed overview of the software and possible applications see [our paper](https://link.springer.com/article/10.1007/s10278-025-01437-2). As an examplary application and a first user experience the EMIDEC data can be used.
 1.	Install Repository
       * Clone the repository
       * Navigate to it
       * Install Lumos with dependicies by using: ` pip install -e . `
 2.	Install Mongo DB
+      * Install [MongoDB Community](https://www.mongodb.com/docs/manual/administration/install-community/)
+      * Install [MongoDB Compass](https://www.mongodb.com/docs/compass/current/install/#std-label-download-install) as MongoDB User Interface
+      * run MongoDB-community and connect to local server (localhost:27017)
 3.  Use the EMIDEC Data as first application case:
       *  Download EMIDEC Data by following the guide on ([EMIDEC website](https://emidec.com/dataset)).
-      *  Zipped annotations for a first application case are automatically downloaded with Lumos in /docs.
-      *	 Use Notebook 'Emidec_Converter' to convert Emidec Data into dicom format
-      *	 Use Notebook 'MongoDB_Manager' to import dicoms and annotations into MongoDB and create necessary class structure
+      *  Zipped additional annotations for a first application case on the EMIDEC images are automatically downloaded with Lumos in /docs.
+      *	 Use Notebook 'Emidec_Converter' in Lumos/Notebooks to convert Emidec Data (Images) into dicom format
+      *	 Use Notebook 'MongoDB_Manager' in Lumos/Notebooks to import dicoms and annotations into MongoDB and create necessary class structure. You need to adjust the paths in the notebook to where you stored images and annotations as explained in the Notebook. Lumos will then be able to utilize this MongoDB Database. You can see the database in the MongoDB Compass on the lefthandside below databases as 'Lumos_CMR_QualityAssuranceDatabase'.
 4.	Open Lumos’ User Interface: 
       * Open terminal
       * Activate environment
@@ -62,5 +68,5 @@ For a detailed overview of the software and possible applications see our paper.
 Lumos is not a licensed medical product, but intended as a research tool to aid in the quality assurance of CMR postprocessing.
 
 # Licence
-If the code was helpful to you, please cite our paper.  link
+If the code was helpful to you, please cite [our paper](https://link.springer.com/article/10.1007/s10278-025-01437-2).
 
